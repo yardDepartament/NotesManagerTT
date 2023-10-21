@@ -8,11 +8,12 @@
 - **Method**: `POST`
 
 #### Request
+```json
 {
   "title": "Note Title",
   "content": "Note Content"
 }
-
+```
 
 #### Response
 ```json
@@ -22,6 +23,7 @@
   "title": "Note Title",
   "content": "Note Content"
 }
+```
 
 ### Получить список Заметок
 
@@ -45,7 +47,7 @@
   },
   ...
 ]
-
+```
 
 ### Получить Детали Заметки
 
@@ -61,7 +63,7 @@
   "title": "Note Title",
   "content": "Note Content"
 }
-
+```
 
 ### Обновить Заметку
 
@@ -76,6 +78,7 @@
   "title": "Updated Note Title",
   "content": "Updated Note Content"
 }
+```
 
 #### Response
 ```json
@@ -84,7 +87,7 @@
   "title": "Updated Note Title",
   "content": "Updated Note Content"
 }
-
+```
 
 
 ### Удалить Заметку
@@ -97,7 +100,7 @@
 #### Response
 ```css
 HTTP 204 No Content
-
+```
 
 
 
@@ -121,7 +124,7 @@ HTTP 204 No Content
   },
   ...
 ]
-
+```
 
 
 ## Использование API
@@ -139,8 +142,8 @@ API позволяет пользователям выполнять опера�
   "title": "New Note",
   "content": "This is a new note."
 }
-
-####Response
+```
+#### Response
 ```json
 
 {
@@ -148,7 +151,7 @@ API позволяет пользователям выполнять опера�
   "title": "Note Title",
   "content": "Note Content"
 }
-
+```
 
 ### Получение списка Заметок
 Чтобы получить список всех заметок, выполните GET запрос на эндпоинт `/api/notes/`.
@@ -166,7 +169,7 @@ API позволяет пользователям выполнять опера�
   "title": "Updated Note",
   "content": "This is the updated content."
 }
-
+```
 
 
 ### Удаление Заметки
