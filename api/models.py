@@ -3,6 +3,7 @@ from django.db import models
 
 from django.db import models
 
+
 class Note(models.Model):
     """
     Модель для заметок.
@@ -25,10 +26,10 @@ class Note(models.Model):
 
     def __str__(self):
         return self.title
-    
+
     def update_content(self, new_content):
         self.content = new_content
         self.save()
-        
+
     def delete_note(self):
         self.delete()
