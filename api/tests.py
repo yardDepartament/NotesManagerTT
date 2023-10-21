@@ -5,6 +5,10 @@ from rest_framework.test import APIClient
 from django.urls import reverse
 from rest_framework import status
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class NoteModelTest(TestCase):
     """
@@ -21,6 +25,7 @@ class NoteModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         Note.objects.create(title='Test Note', content='This is a test note.')
+        logger.info('Test object created')
 
     def test_title_max_length(self):
         """
@@ -29,6 +34,7 @@ class NoteModelTest(TestCase):
         note = Note.objects.get(id=1)
         max_length = note._meta.get_field('title').max_length
         self.assertEqual(max_length, 100)
+        logger.info('The maximum length check is successful.')
 
     def test_content(self):
         """
@@ -37,6 +43,7 @@ class NoteModelTest(TestCase):
         note = Note.objects.get(id=1)
         content = note.content
         self.assertEqual(content, 'This is a test note.')
+        logger.info('Content verification successful')
 
     def test_created_at_auto_now_add(self):
         """
@@ -45,6 +52,7 @@ class NoteModelTest(TestCase):
         note = Note.objects.get(id=1)
         created_at = note.created_at
         self.assertIsNotNone(created_at)
+        logger.info('Verification of automatic addition of creation time is successful.')
 
     def test_empty_title_not_allowed(self):
         """
@@ -53,6 +61,7 @@ class NoteModelTest(TestCase):
         note = Note(content='This is a test note.')
         with self.assertRaises(Exception):
             note.full_clean()
+        logger.info('Check for empty header is successful.')
 
 
 class NoteSerializerTests(TestCase):
@@ -71,6 +80,7 @@ class NoteSerializerTests(TestCase):
         note_data = {'title': 'Test Note', 'content': 'This is a test note.'}
         serializer = NoteSerializer(data=note_data)
         self.assertTrue(serializer.is_valid())
+        logger.info('Serializer data validation successful.')
 
 
 class NoteViewSetTests(TestCase):
@@ -91,6 +101,7 @@ class NoteViewSetTests(TestCase):
         self.client = APIClient()
         self.note_data = {'title': 'Test Note',
                           'content': 'This is a test note.'}
+        logger.info('APIClient is configured.')
 
     def test_create_note(self):
         """
@@ -101,6 +112,7 @@ class NoteViewSetTests(TestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Note.objects.count(), 1)
         self.assertEqual(Note.objects.get().title, 'Test Note')
+        logger.info('The note is created successfully')
 
     def test_view_note_list(self):
         """
@@ -108,6 +120,7 @@ class NoteViewSetTests(TestCase):
         """
         response = self.client.get(reverse('note-list'))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        logger.info('Successfully retrieving a list of notes.')
 
     def test_view_note_detail(self):
         """
@@ -118,6 +131,7 @@ class NoteViewSetTests(TestCase):
         response = self.client.get(
             reverse('note-detail', kwargs={'pk': note.id}))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        logger.info('Successful review of note details.')
 
     def test_update_note(self):
         """
@@ -132,6 +146,7 @@ class NoteViewSetTests(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         note.refresh_from_db()
         self.assertEqual(note.title, 'Updated Test Note')
+        logger.info('These notes have been successfully updated.')
 
     def test_delete_note(self):
         """
@@ -143,3 +158,4 @@ class NoteViewSetTests(TestCase):
             reverse('note-detail', kwargs={'pk': note.id}))
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Note.objects.count(), 0)
+        logger.info('The note is successfully deleted.')
