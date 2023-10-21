@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import logging
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -101,6 +102,32 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+logging.basicConfig(
+    filename='django.log',
+    level=logging.DEBUG,
+    format='%(levelname)s %(asctime)s %(module)s %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S',
+)
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'INFO',  # Минимальный уровень для записи логов
+            'class': 'logging.FileHandler',
+            'filename': 'django.log',  # Файл, куда будут записываться логи
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
