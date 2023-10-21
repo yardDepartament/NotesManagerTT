@@ -8,7 +8,6 @@
 - **Method**: `POST`
 
 #### Request
-```json
 {
   "title": "Note Title",
   "content": "Note Content"
