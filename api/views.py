@@ -1,30 +1,17 @@
-from rest_framework import generics
+from rest_framework import viewsets
+from rest_framework import filters
 from .models import Note
 from .serializers import NoteSerializer
 
 
-class NoteListCreateView(generics.ListCreateAPIView):
+class NoteViewSet(viewsets.ModelViewSet):
     """
-    View for listing and creating notes.
-
-    """
-    queryset = Note.objects.all()
-    serializer_class = NoteSerializer
+    ViewSet для обеспечения всех CRUD операция c объектом.
 
 
-class NoteEditView(generics.UpdateAPIView):
-    """
-    View for editing an existing note.
 
     """
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
-
-
-class NoteDetailView(generics.RetrieveUpdateDestroyAPIView):
-    """
-    View for retrieving, updating and deleting a note.
-
-    """
-    queryset = Note.objects.all()
-    serializer_class = NoteSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title', 'content']
